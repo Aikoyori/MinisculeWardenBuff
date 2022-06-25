@@ -54,9 +54,21 @@ public abstract class WardenLootsMixin extends MobEntity {
         }
     }
 
+    @Override
+    protected int computeFallDamage(float fallDistance, float damageMultiplier) {
+        return 0;
+    }
+
     @Inject(method = "mobTick",at = @At("TAIL"))
     protected void mobTicker(CallbackInfo ci) {
+
         this.bossBar.setPercent(this.getHealth() / this.getMaxHealth());
+        if(this.getY()<this.getWorld().getBottomY() && !this.isAiDisabled())
+        {
+            this.teleport(this.getX(),this.world.getTopY(),this.getZ());
+            this.addVelocity(0.0,-10.0,0.0);
+            this.fallDistance = 0.0f;
+        }
     }
 
     @Override
