@@ -20,3 +20,7 @@ This mod buffs the Warden and makes it drop things from randomly selected loot t
 
 Note that nothing has been changed about the spawn mechanics so you can 
 pretty much just not summon it when you go in the Deep Dark if you're careful enough
+
+Another note: This mod was made because I am tired of people complaining about Warden not giving something interesting
+
+Not needed on Client if you want to run it server-side only. Client side installation is for Singleplayer & LAN worlds.
