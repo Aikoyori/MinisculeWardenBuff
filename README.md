@@ -6,7 +6,7 @@ This mod buffs the Warden and makes it drop things from randomly selected loot t
 ## Features
 - Buffed Warden and changed its loot 
     - It now has 4000 HP instead of usual 500
-    - It now regenerates health on its own with the rate of 1 HP per 10 game tickss (half a second)
+    - It now regenerates health on its own with the rate of 1 HP per 10 game ticks (half a second)
     - It is now immune to projectile damage
     - It is also immune to fall damage
     - Reduced cooldown of Sonic Boom to 30 ticks instead of 40
