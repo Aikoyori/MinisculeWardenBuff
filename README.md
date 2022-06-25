@@ -1,6 +1,8 @@
 # We do a miniscule amount of Warden buffery
 This mod buffs the Warden and makes it drop things from randomly selected loot table
 
+[It is on Modrinth Get it there](https://modrinth.com/mod/minisculewardenbuff)
+
 ## Features
 - Buffed Warden and changed its loot 
     - It now has 4000 HP instead of usual 500
