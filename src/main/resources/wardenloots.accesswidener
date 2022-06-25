@@ -1,0 +1,3 @@
+accessWidener   v1  named
+accessible method net/minecraft/entity/LivingEntity dropLoot (Lnet/minecraft/entity/damage/DamageSource;Z)V
+accessible method net/minecraft/entity/mob/MobEntity getLootContextBuilder (ZLnet/minecraft/entity/damage/DamageSource;)Lnet/minecraft/loot/context/LootContext$Builder;

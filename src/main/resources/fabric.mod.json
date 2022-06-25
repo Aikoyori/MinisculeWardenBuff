@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "minisculewardenbuff",
+  "version": "${version}",
+  "name": "We do a miniscule amount of Warden buffery",
+  "description": "Buffs the Warden and makes it drop things from randomly selected loot table",
+  "authors": ["Aikoyori"],
+  "contact": {
+    "sources":"https://github.com/Aikoyori/MinisculeWardenBuff",
+    "issues": "https://github.com/Aikoyori/MinisculeWardenBuff/issues",
+    "homepage": "https://https://github.com/Aikoyori/MinisculeWardenBuff"
+  },
+  "license": "MIT",
+  "icon": "wardenloot.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "aikoyori.wardenloots.client.WardenlootsClient"
+    ],
+    "main": [
+      "aikoyori.wardenloots.Wardenloots"
+    ]
+  },
+  "mixins": [
+    "wardenloots.mixins.json"
+  ],
+  "depends": {
+    "minecraft": "1.19"
+  },
+  "accessWidener" : "wardenloots.accesswidener"
+}

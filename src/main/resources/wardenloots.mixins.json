@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "aikoyori.wardenloots.mixins",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "AttributeLimitMixin",
+    "WardenLootsMixin"
+  ],
+  "client": [
+  ],
+  "server": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
