@@ -8,6 +8,12 @@ This mod buffs the Warden and makes it drop things from randomly selected loot t
     - It is now immune to projectile damage
     - Reduced cooldown of Sonic Boom to 30 ticks instead of 40
     - It will now drop 30000 experience points instead of 5
-    - Instead of dropping a single sculk catalyst, it also drops random loot table. It could be from village's chest to end city's chest, giving player more reasons to spawn Warden and get annihilated by it. 
+    - Instead of dropping a single sculk catalyst, it also drops random loot table. It could be from some wool to 
+  end city's chest, giving player more reasons to spawn Warden and get annihilated by it.
+    - Warden now has a boss bar (it is now actual boss guys)
+    
 - Modified Attribute Class
     - Max health attribute now caps at 4096
+
+Note that nothing has been changed about the spawn mechanics so you can 
+pretty much just not summon it when you go in the Deep Dark if you're careful enough
