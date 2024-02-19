@@ -4,14 +4,15 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.boss.BossBar;
 import net.minecraft.entity.boss.ServerBossBar;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.ProjectileDamageSource;
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.WardenEntity;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.LootTables;
-import net.minecraft.loot.context.LootContext;
-import net.minecraft.loot.context.LootContextTypes;
+import net.minecraft.loot.context.LootContextParameterSet;
+import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -21,6 +22,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.HashMap;
 import java.util.Random;
 import java.util.Set;
 
@@ -65,7 +67,7 @@ public abstract class WardenLootsMixin extends MobEntity {
         this.bossBar.setPercent(this.getHealth() / this.getMaxHealth());
         if(this.getY()<this.getWorld().getBottomY() && !this.isAiDisabled())
         {
-            this.teleport(this.getX(),this.world.getTopY(),this.getZ());
+            this.teleport(this.getX(),this.getWorld().getTopY(),this.getZ());
             this.addVelocity(0.0,-10.0,0.0);
             this.fallDistance = 0.0f;
         }
@@ -91,50 +93,38 @@ public abstract class WardenLootsMixin extends MobEntity {
         if (this.isInvulnerableTo(source)) {
             return false;
         }
-        if (source instanceof ProjectileDamageSource) {
+        if (source.isIn(DamageTypeTags.IS_PROJECTILE)) {
             return false;
         }
-        boolean bl2 = super.damage(source, amount);
-        return bl2;
+        return super.damage(source, amount);
     }
 
     public void dropLoot(DamageSource source, boolean causedByPlayer) {
-        //System.out.println("AMONG YUS");
         WardenEntity warden = (WardenEntity)(Object)this;
 
 
 
         Identifier identifier = this.getLootTable();
-        LootTable lootTable = warden.world.getServer().getLootManager().getTable(identifier);
-        LootContext.Builder builder = warden.getLootContextBuilder(causedByPlayer, source);
+        LootTable wardenLootTable = getServer().getLootManager().getLootTable(identifier);
+        LootContextParameterSet parameters = new LootContextParameterSet(
+                this.getServer().getWorld(this.getWorld().getRegistryKey()),
+                new HashMap<>() {{
+                    put(LootContextParameters.DAMAGE_SOURCE, source);
+                }},
+                new HashMap<>(),
+                1.0f
+            );
+        wardenLootTable.generateLoot(parameters, warden::dropStack);
 
-        lootTable.generateLoot(builder.build(LootContextTypes.ENTITY), warden::dropStack);
-
-        identifier = (Identifier) allLootTables.toArray()[(randomise.nextInt(0,allLootTables.size()))];
-        builder = warden.getLootContextBuilder(causedByPlayer, source);
-        lootTable = warden.world.getServer().getLootManager().getTable(identifier);
-        lootTable.generateLoot(builder.build(LootContextTypes.ENTITY), warden::dropStack);
-
-
-        /*
-        for(Object item :allLootTables.toArray())
-        {
-            /*
-            if(randomise.nextDouble()>0.9)
-            {
-                Identifier identifier = (Identifier) item;
-                LootTable lootTable = warden.world.getServer().getLootManager().getTable(identifier);
-                LootContext.Builder builder = warden.getLootContextBuilder(causedByPlayer, source);
-                lootTable.generateLoot(builder.build(LootContextTypes.ENTITY), warden::dropStack);
-            }
-
-        }*/
+        Identifier randomIdentifier = (Identifier) allLootTables.toArray()[(randomise.nextInt(0,allLootTables.size()))];
+        LootTable randomLootTable = getServer().getLootManager().getLootTable(randomIdentifier);
+        randomLootTable.generateLoot(parameters, warden::dropStack);
     }
 
     @Override
     public void tickMovement() {
         super.tickMovement();
-        if (!this.world.isClient && this.isAlive() && this.age % 10 == 0) {
+        if (!this.getWorld().isClient && this.isAlive() && this.age % 10 == 0) {
             this.heal(1.0F);
         }
     }
